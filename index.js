@@ -1,11 +1,8 @@
-
+// the code quality here is not good maybe. I Am just Learning.
 
 const taskList = document.querySelector(`#taskList`)
 const div = document.createElement("div")
 div.setAttribute("class", "classDiv")
-
-
-
 
 let userIdInput = 10; // the API has multiple users recognised by an id as because the entire API is returned in an array
 
