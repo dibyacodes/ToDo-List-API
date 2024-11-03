@@ -1,4 +1,4 @@
-// the code quality here is not good maybe. I Am just Learning.
+// the code quality here is not good maybe.
 
 const taskList = document.querySelector(`#taskList`)
 const div = document.createElement("div")
@@ -19,9 +19,9 @@ async function getUserTaskUsingTheId() {
             let userInputForCompletedTasks = document.createElement("input") // for checkbox
             let taskName = document.createElement("label") // for the task title
             let taskId = user.id // for accessing every userEntry
-
             user.completed = false //default task status
             let inputDiv = document.createElement("div")
+            
 
             const removeTaskOnCompletion = () => {
                 user.completed = true
