@@ -5,12 +5,10 @@ const editButton = document.querySelector("#edit")
 displayIfNotNull()
 
 // display the list on page load if not null
-
 function displayIfNotNull(){
     let userTaskListOnLoad = JSON.parse(localStorage.getItem("userDetailsArray")) || []
-
-    if (userTaskListOnLoad != [] || userTaskListOnLoad !== null){
-        DISPLAY_USER_TASKS()
+    if (userTaskListOnLoad.length > 0){
+        displayUserTasks()
     }
 }
 
@@ -18,15 +16,10 @@ function displayIfNotNull(){
 // Checks if the userInput is an empty string or not
 function checkIfAnInvalidString(string){
     if (string.length === 0){
-        // console.log(`Empty string`);
         return true 
     } else {
         return false
     }
-}
-
-function editButtons(taskID){
-
 }
 
 // Create a new input with a checkboxe
@@ -38,9 +31,10 @@ function createUserTask(userTaskLabel){
     inputDiv.style.border = "0.1rem solid #737373"
     inputDiv.style.borderRadius = "0.5rem"
     inputDiv.style.gap = "1rem"
+
     const inputElement = document.createElement("input")
-    inputElement.setAttribute("class","usertask")
     
+    inputElement.setAttribute("class","usertask")
     inputElement.setAttribute("type","checkbox")
     const labelElement = document.createElement("label")
 
@@ -63,45 +57,36 @@ function storeObjectsAsStringLocally(uId,userTaskString){
     // Checks existing values from the web localstorage
     let storeArray = JSON.parse(localStorage.getItem("userDetailsArray")) || [] // Unpacking the array because it is stored as a string
 
-
     storeArray.push(dataObject)
 
     // Conver the JSON object into a string
     let stringObject = JSON.stringify(storeArray) // packing the array
 
-    // console.log(dataObject)
     localStorage.setItem("userDetailsArray",`${stringObject}`)
 }
 
-function DISPLAY_USER_TASKS(){
-
+function displayUserTasks(){
     mainTaskDiv.innerHTML = ''
-    // Get data from Local Storage of the browser
 
+    // Get data from Local Storage of the browser
     const getLocalStorage = JSON.parse(localStorage.getItem("userDetailsArray")) || []
-    console.log(getLocalStorage);
     
     getLocalStorage.forEach(element => {
         createUserTask(element.task)
     });
 }
 
-
 submit.addEventListener('click',()=>{
     const userTask = inputField.value
     const validOrInvalid = checkIfAnInvalidString(userTask)
     
     if (validOrInvalid === false){
-        // console.log(userTask);
-        // new createUserTask(userTask)
         new storeObjectsAsStringLocally(Math.random(),userTask)
     }
-    DISPLAY_USER_TASKS()
-    inputField.value = null
-    console.log(validOrInvalid);
+    displayUserTasks()
+    inputField.value = ''
 })
 
-// createUserTask()
 
 
 
