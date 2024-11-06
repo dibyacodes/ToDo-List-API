@@ -4,23 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List Application | Dummy</title>
-    <link rel="stylesheet" href="index.css">
+    <title>To-Dev</title>
+    <link rel="stylesheet" href="src/output.css">
 </head>
 
-<body>
-    <div id="main">
-        <div id="ListName">
-            <div id="taskListName">
-                <h1>
-                    Dummy TaskList
-                </h1>
-            </div>
-            <div class="task" id="taskList">
+<body class="bg-black">
+    <div>
+        <div class="bg-black flex flex-col items-center">
+            <div class="p-5 flex flex-col w-[50%]">
+                <input class="bg-black py-2 px-4 rounded-xl outline-none border-2 border-gray-500 text-white" id="input"
+                    type="text" placeholder="Add A New Task">
             </div>
         </div>
+        <div class="text-white" id="task"></div>
+        <div>
+            <button class="bg-white py-2 px-6 text-xl rounded-full" id="submit">
+                Submit
+            </button>
+            <button class="bg-white py-2 px-6 text-xl rounded-full" id="edit">
+                edit
+            </button>
+        </div>
     </div>
+
 </body>
-<script src="index.js"></script>
+<script src="src/JS/main.js"></script>
 
 </html>
