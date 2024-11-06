@@ -2,8 +2,19 @@ const inputField = document.querySelector("#input")
 const submit = document.querySelector("#submit")
 const mainTaskDiv = document.querySelector("#task")
 const editButton = document.querySelector("#edit")
+displayIfNotNull()
 
-DISPLAY_USER_TASKS()
+// display the list on page load if not null
+
+function displayIfNotNull(){
+    let userTaskListOnLoad = JSON.parse(localStorage.getItem("userDetailsArray")) || []
+
+    if (userTaskListOnLoad != [] || userTaskListOnLoad !== null){
+        DISPLAY_USER_TASKS()
+    }
+}
+
+
 // Checks if the userInput is an empty string or not
 function checkIfAnInvalidString(string){
     if (string.length === 0){
