@@ -15,7 +15,7 @@ function checkIfAnInvalidString(string){
 }
 
 function editButtons(taskID){
-    
+
 }
 
 // Create a new input with a checkboxe
@@ -67,7 +67,7 @@ function DISPLAY_USER_TASKS(){
     mainTaskDiv.innerHTML = ''
     // Get data from Local Storage of the browser
 
-    const getLocalStorage = JSON.parse(localStorage.getItem("userDetailsArray"))
+    const getLocalStorage = JSON.parse(localStorage.getItem("userDetailsArray")) || []
     console.log(getLocalStorage);
     
     getLocalStorage.forEach(element => {
