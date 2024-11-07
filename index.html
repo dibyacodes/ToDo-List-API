@@ -6,30 +6,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Dev</title>
     <link rel="stylesheet" href="src/output.css">
+    <style>
+        #edit{
+            background-color: white;
+            padding: 0.1rem 1rem;
+            color: black;
+            font-family: monospace;
+            border-radius: 2rem;
+        }
+
+        .userInputDiv{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #353535;
+            padding: 0.5rem 1rem;
+            border: 0.1rem solid #737373;
+            border-radius: 0.5rem;
+            gap: 1rem;
+        }
+
+        .divForInputAndLabel{
+            display: flex;
+            gap:2rem
+        }
+
+        body{
+            font-family: monospace;
+        }
+
+        .editAndRemoveButton{
+            display: flex;
+            /* flex-wrap: wrap; */
+            gap: 1rem;
+        }
+
+        #remove{
+            background-color: white;
+            padding: 0.1rem 1rem;
+            color: black;
+            font-family: monospace;
+            border-radius: 2rem;
+        }
+
+        .taskLabel{
+            /* background-color: red; */
+            max-width: 70%;
+        }
+    </style>
 </head>
 
 <body class="bg-black">
     <div>
-        <div class="bg-black flex flex-col items-center">
+        <div class="bg-black flex gap-2 justify-center items-center">
             <div class="p-5 flex flex-col w-[50%]">
                 <input class="bg-black py-2 px-4 rounded-xl outline-none border-2 border-gray-500 text-white" id="input"
                     type="text" placeholder="Add A New Task">
+            </div>
+            <div class="flex gap-3">
+                <button id="submit" class="bg-white font-mono py-1 px-4 rounded-full">
+                    Add New Task +
+                </button>
+                <!-- <button class="bg-white py-1 px-4 rounded-full font-mono" id="edit">
+                    Edit
+                </button> -->
             </div>
         </div>
         <div class="flex flex-col justify-center items-center">
             <div class="text-white flex flex-col gap-[1rem] w-[50%]" id="task"></div>
         </div>
         <div>
-            <button class="bg-white py-2 px-6 text-xl rounded-full" id="submit">
+            <!-- <button class="bg-white py-2 px-6 text-xl rounded-full" id="submit">
                 Submit
-            </button>
-            <button class="bg-white py-2 px-6 text-xl rounded-full" id="edit">
-                edit
-            </button>
+            </button> -->
+            
         </div>
     </div>
 
 </body>
 <script src="src/JS/main.js"></script>
-
 </html>
