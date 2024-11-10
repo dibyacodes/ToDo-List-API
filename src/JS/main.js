@@ -12,10 +12,16 @@ function randomTaskId() {
     return randomTaskItemId
 }
 
+// gets the local storage and returns an array
+function getLocalStorage(){
+    let storageFromBrowser = JSON.parse(localStorage.getItem("userDetailsArray")) || []
+    return storageFromBrowser
+}
+
 
 // display the list on page load if not null
 function displayIfNotNull() {
-    let userTaskListOnLoad = JSON.parse(localStorage.getItem("userDetailsArray")) || []
+    let userTaskListOnLoad = getLocalStorage()
     if (userTaskListOnLoad.length > 0) {
         displayUserTasks()
     }
@@ -78,6 +84,22 @@ function createUserTask(userTaskLabel, divId) {
         // IDK if this is a good practice but this is what my brain is at 1 am
     })
 
+
+    // On task Completion
+    inputElement.addEventListener('click',()=>{
+        if (inputElement.checked === true){
+            labelElement.style.textDecorationLine = "line-through"
+            labelElement.style.color = "gray"
+            removeButton.innerHTML = `Completed`
+            removeButton.style.backgroundColor = "green"
+            removeButton.style.color = "white"
+        } else {
+            removeButton.innerHTML = `Remove`
+            removeButton.style = "none"
+            labelElement.style = "none"
+        }
+    })
+
     divForInputAndLabel.appendChild(inputElement)
     divForInputAndLabel.appendChild(labelElement)
     divForEditAndRemoveButton.appendChild(removeButton)
@@ -97,7 +119,7 @@ function storeObjectsAsStringLocally(uId, userTaskString) {
     }
 
     // Checks existing values from the web localstorage
-    let storeArray = JSON.parse(localStorage.getItem("userDetailsArray")) || [] // Unpacking the array because it is stored as a string
+    let storeArray = getLocalStorage() // Unpacking the array because it is stored as a string
 
     storeArray.push(dataObject)
 
@@ -111,18 +133,18 @@ function displayUserTasks() {
     mainTaskDiv.innerHTML = ''
 
     // Get data from Local Storage of the browser
-    const getLocalStorage = JSON.parse(localStorage.getItem("userDetailsArray")) || []
+    const getLocalStorageBrowser = getLocalStorage()
 
-    getLocalStorage.forEach(element => {
+    getLocalStorageBrowser.forEach(element => {
         createUserTask(element.task, element.userId)
     });
 }
 
 // Lets the user remove tasks on completion. Should remove it completely from the local storage
 function removeUserFromLocalStorage(userElement) {
-    const getItemFromLocalstorage = JSON.parse(localStorage.getItem("userDetailsArray")) || []
+    const getItemFromLocalstorage = getLocalStorage()
     getItemFromLocalstorage.forEach(element => {
-        if (userElement === element.userId) {
+        if (userElement === element.userId  || element.completedStatus === true) {
             let indexElement = getItemFromLocalstorage.indexOf(element)
             getItemFromLocalstorage.splice(indexElement, 1)
 
@@ -140,8 +162,7 @@ function removeUserFromLocalStorage(userElement) {
 
 // Edit task and then store it to the local storage.
 function editUserTask(targetID) {
-    let UserLocalStorage = JSON.parse(localStorage.getItem("userDetailsArray"))
-
+    let UserLocalStorage = getLocalStorage()
     let localStorageIdForTheTaskButton = targetID.getAttribute("id")
 
     let taskElement
@@ -184,3 +205,4 @@ submit.addEventListener('click', () => {
 })
 
 displayIfNotNull()
+
