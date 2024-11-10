@@ -5,37 +5,6 @@ const mainTaskDiv = document.querySelector("#task")
 displayIfNotNull()
 const ParentEditButton = document.querySelector("#edit")
 
-
-// generate a random task ID for every Task
-function randomTaskId() {
-    let randomTaskItemId = Math.floor(Math.random() * 10000)
-    return randomTaskItemId
-}
-
-// gets the local storage and returns an array
-function getLocalStorage(){
-    let storageFromBrowser = JSON.parse(localStorage.getItem("userDetailsArray")) || []
-    return storageFromBrowser
-}
-
-
-// display the list on page load if not null
-function displayIfNotNull() {
-    let userTaskListOnLoad = getLocalStorage()
-    if (userTaskListOnLoad.length > 0) {
-        displayUserTasks()
-    }
-}
-
-// Checks if the userInput is an empty string or not
-function checkIfAnInvalidString(string) {
-    if (string.trim().length === 0) {
-        return true
-    } else {
-        return false
-    }
-}
-
 // Create a new input with a checkbox
 function createUserTask(userTaskLabel, divId) {
     const inputDiv = document.createElement("div")
@@ -63,6 +32,8 @@ function createUserTask(userTaskLabel, divId) {
     inputElement.setAttribute("class", "usertask")
     inputElement.setAttribute("type", "checkbox")
     inputElement.setAttribute("name", "userTaskInput")
+    
+
     const labelElement = document.createElement("label")
 
     labelElement.textContent = `${userTaskLabel}`
@@ -85,20 +56,27 @@ function createUserTask(userTaskLabel, divId) {
     })
 
 
-    // On task Completion
-    inputElement.addEventListener('click',()=>{
-        if (inputElement.checked === true){
-            labelElement.style.textDecorationLine = "line-through"
-            labelElement.style.color = "gray"
-            removeButton.innerHTML = `Completed`
-            removeButton.style.backgroundColor = "green"
-            removeButton.style.color = "white"
-        } else {
-            removeButton.innerHTML = `Remove`
-            removeButton.style = "none"
-            labelElement.style = "none"
+    let changeTaskStatus = getLocalStorage()
+
+    if (inputElement.checked === true) {
+        for (let i = 0; i < changeTaskStatus.length; i++) {
+            if (divId === changeTaskStatus[i].userId) {
+                changeTaskStatus[i].completedStatus = true
+            }
         }
-    })
+        localStorage.setItem("userDetailsArray", JSON.stringify(changeTaskStatus))
+    } else if (inputElement.checked === false) {
+        for (let i = 0; i < changeTaskStatus.length; i++) {
+            if (divId === changeTaskStatus[i].userId) {
+                changeTaskStatus[i].completedStatus = false
+            }
+        }
+        localStorage.setItem("userDetailsArray", JSON.stringify(changeTaskStatus))
+    }
+
+
+    // Keeping the check mark alive
+    frontEndResponseToCompletedTasks(divId, inputElement)
 
     divForInputAndLabel.appendChild(inputElement)
     divForInputAndLabel.appendChild(labelElement)
@@ -109,13 +87,54 @@ function createUserTask(userTaskLabel, divId) {
     mainTaskDiv.appendChild(inputDiv)
 }
 
+function frontEndResponseToCompletedTasks(mathMakerID, element) {
+    let changeTaskStatus = getLocalStorage()
+    for (let i = 0; i < changeTaskStatus.length; i++) {
+        if (changeTaskStatus[i].completedStatus === true) {
+            if (mathMakerID === changeTaskStatus[i].userId) {
+                element.checked = true
+            }
+        }
+    }
+}
+
+
+// generate a random task ID for every Task
+function randomTaskId() {
+    let randomTaskItemId = Math.floor(Math.random() * 10000)
+    return randomTaskItemId
+}
+
+// gets the local storage and returns an array
+function getLocalStorage() {
+    let storageFromBrowser = JSON.parse(localStorage.getItem("userDetailsArray")) || []
+    return storageFromBrowser
+}
+
+// display the list on page load if not null
+function displayIfNotNull() {
+    let userTaskListOnLoad = getLocalStorage()
+    if (userTaskListOnLoad.length > 0) {
+        displayUserTasks()
+    }
+}
+
+// Checks if the userInput is an empty string or not
+function checkIfAnInvalidString(string) {
+    if (string.trim().length === 0) {
+        return true
+    } else {
+        return false
+    }
+}
+
 // accept inputs in an object and stores it as string in local storage
 function storeObjectsAsStringLocally(uId, userTaskString) {
     // Gets All the Data in an Object
     let dataObject = {
         userId: uId, // stored as a number ID
         task: `${userTaskString}`,
-        completedStatus: false
+        completedStatus: false //default state of the task is set to false
     }
 
     // Checks existing values from the web localstorage
@@ -144,19 +163,19 @@ function displayUserTasks() {
 function removeUserFromLocalStorage(userElement) {
     const getItemFromLocalstorage = getLocalStorage()
     getItemFromLocalstorage.forEach(element => {
-        if (userElement === element.userId  || element.completedStatus === true) {
+        if (userElement === element.userId || element.completedStatus === true) {
             let indexElement = getItemFromLocalstorage.indexOf(element)
             getItemFromLocalstorage.splice(indexElement, 1)
 
             let modifiedArray = JSON.stringify(getItemFromLocalstorage)
             localStorage.setItem("userDetailsArray", `${modifiedArray}`)
         }
-
-        if (getItemFromLocalstorage.length === 0) {
-            displayIfNotNull()
-            localStorage.clear()
-        }
     });
+
+    if (getItemFromLocalstorage.length === 0) {
+        displayIfNotNull()
+        localStorage.clear()
+    }
 }
 
 
@@ -179,7 +198,7 @@ function editUserTask(targetID) {
     ParentEditButton.addEventListener('click', () => {
         let InvalidEdit = checkIfAnInvalidString(inputField.value)
 
-        if (InvalidEdit) {  
+        if (InvalidEdit) {
             inputField.value = null
         } else {
             taskElement.task = inputField.value
@@ -191,6 +210,7 @@ function editUserTask(targetID) {
         }
     })
 }
+
 
 submit.addEventListener('click', () => {
     const userTask = inputField.value
@@ -205,4 +225,5 @@ submit.addEventListener('click', () => {
 })
 
 displayIfNotNull()
+// showCompletedTasks()
 
