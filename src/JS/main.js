@@ -66,14 +66,16 @@ function createUserTask(userTaskLabel, divId) {
     // Defining what will the edit and remove buttons do
 
     // Remove Button
-    removeButton.addEventListener('click',() => {
+    removeButton.addEventListener('click', () => {
         removeUserFromLocalStorage(divId)
         displayIfNotNull()
     })
 
     // Edit Button
-    editButton.addEventListener('click', () => {
-        editUserTask(divId)
+    editButton.addEventListener('click', (event) => {
+        let mainDiv = event.target
+        editUserTask(mainDiv.parentElement.parentElement)
+        // IDK if this is a good practice but this is what my brain is at 1 am
     })
 
     divForInputAndLabel.appendChild(inputElement)
@@ -139,27 +141,27 @@ function removeUserFromLocalStorage(userElement) {
 // Edit task and then store it to the local storage.
 function editUserTask(targetID) {
     let UserLocalStorage = JSON.parse(localStorage.getItem("userDetailsArray"))
+
+    let localStorageIdForTheTaskButton = targetID.getAttribute("id")
+
     let taskElement
 
     UserLocalStorage.forEach((element) => {
-        if (targetID == element.userId) {
+        if (localStorageIdForTheTaskButton == element.userId) {
             taskElement = element
+            inputField.value = taskElement.task
+            submit.style.display = "none"
+            ParentEditButton.style.display = "block"
         }
     })
 
-    inputField.value = taskElement.task
-    submit.style.display = "none"
-    ParentEditButton.style.display = "block"
-
     ParentEditButton.addEventListener('click', () => {
-        if (taskElement.task !== inputField.value) {
-            taskElement.task = inputField.value
-            let modifiedList = JSON.stringify(UserLocalStorage)
-            localStorage.setItem("userDetailsArray", modifiedList)
-            displayIfNotNull()
-            submit.style.display = "block"
-            ParentEditButton.style.display = 'none'   
-        }   
+        taskElement.task = inputField.value
+        let modifiedList = JSON.stringify(UserLocalStorage)
+        localStorage.setItem("userDetailsArray", modifiedList)
+        displayIfNotNull()
+        submit.style.display = "block"
+        ParentEditButton.style.display = 'none'
     })
 }
 
