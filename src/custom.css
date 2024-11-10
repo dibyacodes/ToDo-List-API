@@ -1,0 +1,46 @@
+.edit{
+    background-color: white;
+    padding: 0.1rem 1rem;
+    color: black;
+    font-family: monospace;
+    border-radius: 2rem;
+}
+
+.userInputDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #353535;
+    padding: 0.5rem 1rem;
+    border: 0.1rem solid #737373;
+    border-radius: 0.5rem;
+    gap: 1rem;
+}
+
+.divForInputAndLabel{
+    display: flex;
+    gap:2rem
+}
+
+body{
+    font-family: monospace;
+}
+
+.editAndRemoveButton{
+    display: flex;
+    /* flex-wrap: wrap; */
+    gap: 1rem;
+}
+
+.remove{
+    background-color: white;
+    padding: 0.1rem 1rem;
+    color: black;
+    font-family: monospace;
+    border-radius: 2rem;
+}
+
+.taskLabel{
+    /* background-color: red; */
+    max-width: 70%;
+}
