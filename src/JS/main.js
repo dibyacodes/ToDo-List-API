@@ -23,7 +23,7 @@ function displayIfNotNull() {
 
 // Checks if the userInput is an empty string or not
 function checkIfAnInvalidString(string) {
-    if (string.length === 0) {
+    if (string.length === 0 || string == " ") {
         return true
     } else {
         return false
