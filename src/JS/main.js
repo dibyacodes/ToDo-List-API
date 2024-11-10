@@ -157,10 +157,8 @@ function editUserTask(targetID) {
 
     ParentEditButton.addEventListener('click', () => {
         let InvalidEdit = checkIfAnInvalidString(inputField.value)
-        console.log(InvalidEdit);
 
-        if (InvalidEdit) {
-            console.log(`Invalid Edit! Empty String Passed`);
+        if (InvalidEdit) {  
             inputField.value = null
         } else {
             taskElement.task = inputField.value
