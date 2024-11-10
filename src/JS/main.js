@@ -156,12 +156,20 @@ function editUserTask(targetID) {
     })
 
     ParentEditButton.addEventListener('click', () => {
-        taskElement.task = inputField.value
-        let modifiedList = JSON.stringify(UserLocalStorage)
-        localStorage.setItem("userDetailsArray", modifiedList)
-        displayIfNotNull()
-        submit.style.display = "block"
-        ParentEditButton.style.display = 'none'
+        let InvalidEdit = checkIfAnInvalidString(inputField.value)
+        console.log(InvalidEdit);
+
+        if (InvalidEdit) {
+            console.log(`Invalid Edit! Empty String Passed`);
+            inputField.value = null
+        } else {
+            taskElement.task = inputField.value
+            let modifiedList = JSON.stringify(UserLocalStorage)
+            localStorage.setItem("userDetailsArray", modifiedList)
+            displayIfNotNull()
+            submit.style.display = "block"
+            ParentEditButton.style.display = 'none'
+        }
     })
 }
 
