@@ -1,6 +1,7 @@
 {
   "name": "todolist",
   "version": "0.0.1",
+  "type": "module",
   "description": "This is a local todo list application",
   "main": "index.js",
   "scripts": {
