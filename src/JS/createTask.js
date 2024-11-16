@@ -3,14 +3,13 @@ import removeUserFromLocalStorage from "./removeTask.js"
 import editUserTask from "./editTasks.js"
 import { displayIfNotNull } from "./main.js"
 
-
 const mainTaskDiv = document.querySelector("#task")
 
 export default function createUserTask(userTaskLabel, divId) {
     const inputDiv = document.createElement("div")
     inputDiv.setAttribute("class", "userInputDiv")
     inputDiv.setAttribute("id", divId)
-    
+   
     const divForEditAndRemoveButton = document.createElement("div")
     divForEditAndRemoveButton.setAttribute("class", "editAndRemoveButton")
     
@@ -22,20 +21,21 @@ export default function createUserTask(userTaskLabel, divId) {
     // Defining the remove button
     const removeButton = document.createElement("button")
     removeButton.setAttribute("class", "remove")
+    removeButton.style.backgroundColor = "red"
+    removeButton.style.color = "white"
+    removeButton.style.fontWeight = "bold"
     removeButton.innerHTML = `Remove`
     
     
     const divForInputAndLabel = document.createElement("div")
     divForInputAndLabel.setAttribute("class", "divForInputAndLabel")
-    const inputElement = document.createElement("input")
 
-    
+    const inputElement = document.createElement("input")
     inputElement.setAttribute("class", "usertask")
     inputElement.setAttribute("type", "checkbox")
     inputElement.setAttribute("name", "userTaskInput")
 
     changeStatusOfCompletedTasks(inputElement)
-    
 
     const labelElement = document.createElement("label")
     

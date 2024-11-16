@@ -7,14 +7,17 @@
 }
 
 .userInputDiv{
+    max-width: 50ch;
+    min-width: 50ch;
+    background-color: #333333;
+    border: 0.134rem solid rgb(112, 112, 112);
+    border-radius: 1rem;
+    box-shadow: white 0.01rem 0.103rem 0.133rem;
+    padding: 2rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #353535;
-    padding: 0.5rem 1rem;
-    border: 0.1rem solid #737373;
-    border-radius: 0.5rem;
-    gap: 1rem;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 2rem;
 }
 
 .divForInputAndLabel{
