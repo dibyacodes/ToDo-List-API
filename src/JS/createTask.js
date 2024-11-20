@@ -1,11 +1,14 @@
-import changeStatusOfCompletedTasks from "./taskStatus.js"
 import removeUserFromLocalStorage from "./removeTask.js"
 import editUserTask from "./editTasks.js"
 import { displayIfNotNull } from "./main.js"
+import changeTaskStatus from "./turnTaskStatusTrue.js"
+import getLocalStorage from "./localStore.js"
 
 const mainTaskDiv = document.querySelector("#task")
 
 export default function createUserTask(userTaskLabel, divId) {
+    let getTasks = getLocalStorage()
+
     const inputDiv = document.createElement("div")
     inputDiv.setAttribute("class", "userInputDiv")
     inputDiv.setAttribute("id", divId)
@@ -31,12 +34,16 @@ export default function createUserTask(userTaskLabel, divId) {
     divForInputAndLabel.setAttribute("class", "divForInputAndLabel")
 
     const inputElement = document.createElement("input")
-    inputElement.setAttribute("class", "usertask")
+    inputElement.setAttribute("class", divId)
     inputElement.setAttribute("type", "checkbox")
-    inputElement.setAttribute("name", "userTaskInput")
-
-    changeStatusOfCompletedTasks(inputElement)
-
+    inputElement.setAttribute("name", "userTasks")
+    
+    
+    // In case a task is completed and the user checks the box
+    inputElement.addEventListener('click',()=>{
+        changeTaskStatus(divId,inputElement)
+    })
+    
     const labelElement = document.createElement("label")
     
     labelElement.textContent = `${userTaskLabel}`
@@ -44,18 +51,28 @@ export default function createUserTask(userTaskLabel, divId) {
     labelElement.setAttribute("class", "taskLabel")
     
     // Defining what will the edit and remove buttons do
-
+    
     // Remove Button
     removeButton.addEventListener('click', () => {
         removeUserFromLocalStorage(divId)
         displayIfNotNull()
     })
-
+    
     // Edit Button
     editButton.addEventListener('click', (event) => {
         let mainDiv = event.target
         editUserTask(mainDiv.parentElement.parentElement)
     })
+    
+    // When the tasks completedStatus is marked true in the local storage
+
+    for (let i=0;i<getTasks.length;i++){
+        if (getTasks[i].completedStatus === true && getTasks[i].userId == inputElement.getAttribute("class")){
+            // console.log(inputElement);
+            inputElement.checked = true
+            labelElement.style.textDecoration = "line-through"
+        }
+    }
 
     divForInputAndLabel.appendChild(inputElement)
     divForInputAndLabel.appendChild(labelElement)

@@ -2,12 +2,12 @@ import createUserTask from "./createTask.js"
 import storeObjectsAsStringLocally from "./localDataStore.js"
 import getLocalStorage from "./localStore.js"
 
+
 const inputField = document.querySelector("#input")
 const submit = document.querySelector("#submit")
 const mainTaskDiv = document.querySelector("#task")
 displayIfNotNull()
-
-
+// checkCompletedTasks()
 // Create a new input with a checkbox
 
 
