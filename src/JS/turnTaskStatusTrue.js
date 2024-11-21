@@ -14,6 +14,10 @@ export default function changeTaskStatus(taskId,varElement){
                 localStorage.setItem("userDetailsArray",JSON.stringify(taskList))
                 console.log(`The id of the task clicked is ${taskList[i].userId}`,taskList[i].completedStatus);
                 return taskList[i]
+            } else if (varElement.checked === false){
+                taskList[i].completedStatus = false;
+                localStorage.setItem("userDetailsArray",JSON.stringify(taskList))
+                return taskList[i]
             }
         }
     }

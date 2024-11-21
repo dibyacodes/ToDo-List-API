@@ -12,15 +12,15 @@ export default function createUserTask(userTaskLabel, divId) {
     const inputDiv = document.createElement("div")
     inputDiv.setAttribute("class", "userInputDiv")
     inputDiv.setAttribute("id", divId)
-   
+
     const divForEditAndRemoveButton = document.createElement("div")
     divForEditAndRemoveButton.setAttribute("class", "editAndRemoveButton")
-    
+
     // Defining the edit button
     const editButton = document.createElement("button")
     editButton.setAttribute("class", "edit")
     editButton.innerHTML = `Edit`
-    
+
     // Defining the remove button
     const removeButton = document.createElement("button")
     removeButton.setAttribute("class", "remove")
@@ -28,8 +28,8 @@ export default function createUserTask(userTaskLabel, divId) {
     removeButton.style.color = "white"
     removeButton.style.fontWeight = "bold"
     removeButton.innerHTML = `Remove`
-    
-    
+
+
     const divForInputAndLabel = document.createElement("div")
     divForInputAndLabel.setAttribute("class", "divForInputAndLabel")
 
@@ -37,42 +37,44 @@ export default function createUserTask(userTaskLabel, divId) {
     inputElement.setAttribute("class", divId)
     inputElement.setAttribute("type", "checkbox")
     inputElement.setAttribute("name", "userTasks")
-    
-    
+
+
     // In case a task is completed and the user checks the box
-    inputElement.addEventListener('click',()=>{
-        changeTaskStatus(divId,inputElement)
+    inputElement.addEventListener('click', () => {
+        changeTaskStatus(divId, inputElement)
+        labelChange(labelElement, inputElement)
     })
-    
+
     const labelElement = document.createElement("label")
-    
+
     labelElement.textContent = `${userTaskLabel}`
     labelElement.setAttribute("for", "task")
     labelElement.setAttribute("class", "taskLabel")
-    
+
     // Defining what will the edit and remove buttons do
-    
+
     // Remove Button
     removeButton.addEventListener('click', () => {
         removeUserFromLocalStorage(divId)
         displayIfNotNull()
     })
-    
+
     // Edit Button
     editButton.addEventListener('click', (event) => {
         let mainDiv = event.target
         editUserTask(mainDiv.parentElement.parentElement)
     })
-    
+
     // When the tasks completedStatus is marked true in the local storage
 
-    for (let i=0;i<getTasks.length;i++){
-        if (getTasks[i].completedStatus === true && getTasks[i].userId == inputElement.getAttribute("class")){
+    for (let i = 0; i < getTasks.length; i++) {
+        if (getTasks[i].completedStatus === true && getTasks[i].userId == inputElement.getAttribute("class")) {
             // console.log(inputElement);
             inputElement.checked = true
-            labelElement.style.textDecoration = "line-through"
+            labelChange(labelElement, inputElement)
         }
     }
+
 
     divForInputAndLabel.appendChild(inputElement)
     divForInputAndLabel.appendChild(labelElement)
@@ -81,4 +83,13 @@ export default function createUserTask(userTaskLabel, divId) {
     inputDiv.appendChild(divForInputAndLabel)
     inputDiv.appendChild(divForEditAndRemoveButton)
     mainTaskDiv.appendChild(inputDiv)
+}
+
+
+function labelChange(targetElement, triggerElement) {
+    if (triggerElement.checked === true) {
+        targetElement.style.textDecoration = "line-through"
+    } else if (triggerElement.checked === false){
+        targetElement.style.textDecoration = "none"
+    }
 }
