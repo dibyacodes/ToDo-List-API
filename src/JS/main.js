@@ -58,6 +58,20 @@ submit.addEventListener('click', () => {
     inputField.value = ''
 })
 
+inputField.addEventListener('keydown', (event) => {
+    if (event.key == "Enter") {
+        const userTask = inputField.value
+        const validOrInvalid = checkIfAnInvalidString(userTask)
+
+        if (validOrInvalid === false) {
+            let randomId = randomTaskId()
+            new storeObjectsAsStringLocally(randomId, userTask)
+        }
+        displayUserTasks()
+        inputField.value = ''
+    }
+})
+
 displayIfNotNull()
 // showCompletedTasks()
 

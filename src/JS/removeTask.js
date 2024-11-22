@@ -5,7 +5,7 @@ import { displayIfNotNull } from "./main.js";
 export default function removeUserFromLocalStorage(userElement) {
     const getItemFromLocalstorage = getLocalStorage()
     getItemFromLocalstorage.forEach(element => {
-        if (userElement === element.userId || element.completedStatus === true) {
+        if (userElement === element.userId) {
             let indexElement = getItemFromLocalstorage.indexOf(element)
             getItemFromLocalstorage.splice(indexElement, 1)
 
